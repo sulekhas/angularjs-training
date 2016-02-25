@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Session 1</title>
+    <script data-require="angularjs@1.4.9" data-semver="1.4.9" src="https://code.angularjs.org/1.4.9/angular.min.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <script src="script.js"></script>
+  </head>
+
+  <body ng-app="expenseMgrApp">
+    
+    
+     <div ng-controller="moneyController">
+<div class=row-fluid>
+      Total Income = {{ totalIncome}}
+      Total Expense = {{ totalExpenses}}
+        Total Balance = {{ totalIncome - totalExpenses}}
+      </div>
+     
+      <div class="row-fluid">
+      <button data-ng-click="showIncome()" class="btn btn-primary margin-t-15px ">Show Income</button>
+      <button data-ng-click="showExpense()" class="btn btn-primary margin-t-15px ">Show Expense</button>
+    </div>
+      <table class="table table-striped margin-t-15px">
+         <tr>
+          <td>TransID</td>
+          <td>Payer</td>
+          <td>Category</td>
+          <td>Amount</td>
+          <td>Date</td>
+          <td>ModeOfPayment</td>
+          <td>Notes</td>
+        </tr>
+        
+        <tr ng-repeat="transaction in transactions">
+          <td>{{transaction.transID}}</td>
+          <td>{{transaction.payer}}</td>
+          <td>{{transaction.category}}</td>
+          <td>{{transaction.amount}}</td>
+          <td>{{transaction.date}}</td>
+          <td>{{transaction.modeOfPayment}}</td>
+          <td>{{transaction.notes}}</td>
+        </tr>
+      </table>
+      
+    </div>
+    
+    <script>
+      var expenseMgrApp = angular.module('expenseMgrApp',[]);
+      
+      var controllers = {};
+      controllers.moneyController = function($scope){
+        
+        
+        
+        $scope.incomes=[
+          {transID:'1', payer: 'Globant Salary',payee:'sulekha d',Category :'salary',amount: '20000' ,date: '1/1/2016',modeOfPayment : 'electronic_transfer',notes :'income' },
+          {transID:'2', payer: 'mr.xyz',payee:'sulekha d',Category :'salary',amount: '5000' ,date: '5/1/2016',modeOfPayment : 'electronic_transfer',notes :'income' },
+          {transID:'3', payer: 'SBI',payee:'sulekha d',Category :'saving_deposite',amount: '3000' ,date: '6/1/2016',modeOfPayment : 'electronic_transfer',notes :'income' },
+          {transID:'3', payer: 'Tenent',payee:'sulekha d',Category :'Rent',amount: '2500' ,date: '6/1/2016',modeOfPayment : 'electronic_transfer',notes :'income' }
+        ];
+        
+        $scope.expenses=[
+          {transID:'1', payer: 'sulekha',payee:'ppf',Category :'invest',amount: 5000 ,date: '1/1/2016',modeOfPayment : 'electronic_transfer',notes :'expense' },
+          {transID:'2', payer: 'sulekha',payee:'home',Category :'home',amount: 8000 ,date: '5/1/2016',modeOfPayment : 'cash',notes :'expense' },
+          {transID:'3', payer: 'sulekha',payee:'sbi',Category :'expense',amount: 3000 ,date: '6/1/2016',modeOfPayment : 'electronic_transfer',notes :'expense' }
+        ];
+        $scope.transactions = $scope.incomes;
+        
+        $scope.totalIncome = parseInt(0);
+        for(income in $scope.incomes)        {
+            //alert(income)
+            $scope.totalIncome = $scope.totalIncome+parseInt($scope.incomes[income].amount);
+        }
+        $scope.totalExpenses = parseInt(0);
+        for(expe in $scope.expenses)        {
+            //alert(income)
+            $scope.totalExpenses = $scope.totalExpenses+parseInt($scope.expenses[expe].amount);
+        }
+        
+        $scope.showIncome = function () {
+         //alert("income");
+          $scope.transactions = $scope.incomes;
+          
+        }
+        
+        $scope.showExpense = function () {
+         // alert("Expense");
+          $scope.transactions = $scope.expenses;
+          
+        }
+        
+      }
+      
+      controllers.expenseController = function($scope){
+          
+        
+      }
+      
+      expenseMgrApp.controller(controllers);
+      
+    </script>
+    
+  </body>
+
+</html>
